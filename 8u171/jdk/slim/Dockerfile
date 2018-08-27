@@ -7,7 +7,6 @@ RUN cd /tmp                                                              && \
 #    apk update && \
     apk add --no-cache --virtual=build-dependencies ca-certificates wget tzdata && \
     ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
-    export LANG=en_US.UTF-8 && \
     export JAVA_URL="your url"                      && \
     export JAVA_HOME="/usr/lib/jvm/default-jvm"                          && \
     wget -q ${JAVA_URL}/glibc-2.26-r0.apk                            && \
@@ -16,6 +15,7 @@ RUN cd /tmp                                                              && \
     apk add --no-cache --allow-untrusted glibc-2.26-r0.apk                    && \
     apk add --no-cache --allow-untrusted glibc-bin-2.26-r0.apk               && \
     apk add --no-cache --allow-untrusted glibc-i18n-2.26-r0.apk               && \
+    /usr/glibc-compat/bin/localedef -i en_US -f UTF-8 en_US.UTF-8  && \
     echo 'hosts: files mdns4_minimal [NOTFOUND=return] dns mdns4' >> /etc/nsswitch.conf && \
     echo "Asia/Shanghai" > /etc/timezone && \
     mkdir -p /usr/lib/jvm                                                && \
